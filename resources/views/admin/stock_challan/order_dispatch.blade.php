@@ -90,6 +90,8 @@
                                             <input type="text" class="form-control" id="total_amount" name="total_amount" value="{{ $orderlist->rate * $orderlist->quantity }}"/>
                                         </div>
                                     </div>
+                                    <p style="text-align: center;font-weight: 700;">Report will be update on confirmation.</p>
+                                    <hr>
                                     <div class="row">
                                             <div class="form-group col-md-3">
                                                 <label for="Trash">Trash</label>
@@ -121,6 +123,12 @@
                                                     id="RD" name="conditionmaster[]"
                                                     value="{{ $conditiondata['4'] }}" placeholder="" />
                                             </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="remark">Remark:- </label>
+                                            <input type="text" class="form-control" name="remark" value="" />
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="form-check">

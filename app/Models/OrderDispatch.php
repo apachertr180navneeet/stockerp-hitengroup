@@ -21,5 +21,6 @@ class OrderDispatch extends Model
         'amount',
         'status',
         'conditionmaster',
+        'remark',
     ];
 }

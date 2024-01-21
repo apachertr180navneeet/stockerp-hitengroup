@@ -211,6 +211,7 @@ class StockChallanController extends Controller
             'rate' => $request->rate,
             'order_id' => $request->id,
             'amount' => $request->total_amount,
+            'remark' => $request->remark,
             'conditionmaster' => $condition,
         ];
 
@@ -260,7 +261,7 @@ class StockChallanController extends Controller
     public function order_dispatch_view($id){
         if(Auth::check()){
             $user_data = auth()->user();
-            $orderlist = OrderDispatch::select('order_dispatch.id','order_dispatch.order_dispatch_date','order_dispatch.order_dispatch_number','order_dispatch.conditionmaster','order_dispatch.qty','order_dispatch.rate','order_dispatch.order_id','order_dispatch.amount','stock_challan.branch_id','stock_challan.challan_number','stock_challan.item_id','stock_challan.quantity','stock_challan.status','item.item_name','users.name AS user_name','branch.name AS branch_name')
+            $orderlist = OrderDispatch::select('order_dispatch.id','order_dispatch.order_dispatch_date','order_dispatch.remark','order_dispatch.order_dispatch_number','order_dispatch.conditionmaster','order_dispatch.qty','order_dispatch.rate','order_dispatch.order_id','order_dispatch.amount','stock_challan.branch_id','stock_challan.challan_number','stock_challan.item_id','stock_challan.quantity','stock_challan.status','item.item_name','users.name AS user_name','branch.name AS branch_name')
             ->where('order_dispatch.id',$id)
             ->join('stock_challan', 'order_dispatch.order_id', '=', 'stock_challan.id')
             ->join('item', 'stock_challan.item_id', '=', 'item.id')
@@ -271,6 +272,20 @@ class StockChallanController extends Controller
             $conditiondata = json_decode($orderlist->conditionmaster, true);
 
             return view('admin.stock_challan.order_dispatch_view',compact('user_data','orderlist','conditiondata'));
+        }
+        return redirect("admin/login")->withSuccess('You are not allowed to access');
+    }
+    public function order_dispatch_report_update(Request $request){
+        if(Auth::check()){
+            $id = $request->id;
+            $conditionmaster = $request->conditionmaster;
+            $condition = json_encode($conditionmaster);
+            $datauser = [
+                'conditionmaster' => $condition,
+                'remark' => $request->remark,
+            ];
+
+            OrderDispatch::where('id', $id)->update($datauser);   
         }
         return redirect("admin/login")->withSuccess('You are not allowed to access');
     }

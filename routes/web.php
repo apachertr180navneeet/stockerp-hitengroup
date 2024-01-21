@@ -189,6 +189,7 @@ Route::name('admin.')->prefix('admin')->controller(StockChallanController::class
     Route::post('order_dispatch_update', 'order_dispatch_update')->name('order.dispatch.update');
     Route::get('disptach_serach', 'disptach_serach')->name('dispatch.serach');
     Route::get('order_dispatch_view/{id}', 'order_dispatch_view')->name('order.dispatch.view');
+    Route::post('order_dispatch_report_update', 'order_dispatch_report_update')->name('order.dispatch.report.update');
 });
 
 // Report Url 

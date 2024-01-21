@@ -29,12 +29,17 @@ use Illuminate\Support\Facades\{
 class UserController extends Controller
 {
     public function index(){
-        if(Auth::check()){
+        if (Auth::check()) {
             $user_data = auth()->user();
 
-            $user_list = User::where('type', '2')->select('users.id','users.status','users.name','users.email','users.phone_number','branch.name As branchname')->join('user_detail', 'users.id', '=', 'user_detail.user_id')->join('branch', 'users.branch_id', '=', 'branch.id')->paginate(10);
-            
-            return view('admin.user.user_list',compact('user_data','user_list'))->with('i', (request()->input('page', 1) - 1) * 1);
+            $user_list = User::with(['userDetail', 'branch'])
+                ->where('type', '2')
+                ->select('users.id', 'users.status', 'users.name', 'users.email', 'users.phone_number', 'branch.name As branchname')
+                ->join('user_detail', 'users.id', '=', 'user_detail.user_id')
+                ->join('branch', 'users.branch_id', '=', 'branch.id')
+                ->paginate(10);
+
+            return view('admin.user.user_list', compact('user_data', 'user_list'))->with('i', (request()->input('page', 1) - 1) * 1);
         }
 
         return redirect("admin/login")->withSuccess('You are not allowed to access');
@@ -48,7 +53,7 @@ class UserController extends Controller
             $user_data = auth()->user();
 
             $branch_list = Branch::get();
-            
+
             return view('admin.user.user_add',compact('user_data','branch_list'));
         }
 
@@ -106,20 +111,20 @@ class UserController extends Controller
 
         return redirect("admin/login")->withSuccess('You are not allowed to access');
     }
-       
+
     public function edit($id){
         if(Auth::check()){
             $user_data = auth()->user();
             $branch_list = Branch::get();
             $user = User::where('id', $id)->join('user_detail', 'users.id', '=', 'user_detail.user_id')->first();
 
-            
+
             return view('admin.user.user_edit',compact('user_data','user','branch_list'));
         }
 
         return redirect("admin/login")->withSuccess('You are not allowed to access');
     }
-        
+
     public function update(Request $request){
         $validatedData = $request->validate([
             'name' => 'required',
@@ -163,15 +168,15 @@ class UserController extends Controller
         $deleted = User::where('id', $id)->delete();
         return response()->json(['success'=>'user Deleted Successfully!']);
     }
-    
+
     public function status(Request $request){
-        
+
         $id = $request->id;
         $datauser = [
              'status' => $request->status,
         ];
 
-        
+
         User::where('id', $id)->update($datauser);
 
 

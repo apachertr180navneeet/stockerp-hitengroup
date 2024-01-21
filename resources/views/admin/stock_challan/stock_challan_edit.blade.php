@@ -64,7 +64,7 @@
                                     <div class="form-group">
                                         <label>Customer Name</label>
                                         <select class="form-control select2bs4 select2-hidden-accessible" id="customer_id"
-                                            name="customer_id" style="width: 100%;" aria-hidden="true">
+                                            name="customer_id" style="width: 100%;" aria-hidden="true" required>
                                             <option value="">----Select----</option>
                                             @foreach ($user_list as $users)
                                                 <option value="{{ $user->id }}"

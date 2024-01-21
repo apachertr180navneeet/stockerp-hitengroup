@@ -39,7 +39,7 @@
                             @endif
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form role="form" action="{{ route('admin.order.dispatch.update') }}" method="post"
+                            <form role="form" action="{{ route('admin.order.dispatch.report.update') }}" method="post"
                                 id="coustomer_add" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $orderlist->id }}">
@@ -100,49 +100,39 @@
                                                 value="{{ $orderlist->qty * $orderlist->rate }}" readonly />
                                         </div>
                                     </div>
+                                    <p style="text-align: center;font-weight: 700;">Report will be update on confirmation.</p>
+                                    <hr>
                                     <div class="row">
                                         <div class="form-group col-md-3">
                                             <label for="Trash">Trash</label>
-                                            <input type="text" min="0" class="form-control" id="Trash"
-                                                name="conditionmaster[]" value="{{ $conditiondata['0'] }}" placeholder=""
-                                                readonly />
+                                            <input type="text" min="0" class="form-control" id="Trash" name="conditionmaster[]" value="{{ $conditiondata['0'] }}" placeholder=""/>
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label for="Moisture">Moisture</label>
-                                            <input type="text" min="0" class="form-control" id="Moisture"
-                                                name="conditionmaster[]" value="{{ $conditiondata['1'] }}" placeholder=""
-                                                readonly />
+                                            <input type="text" min="0" class="form-control" id="Moisture" name="conditionmaster[]" value="{{ $conditiondata['1'] }}" placeholder=""/>
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label for="Length">Length</label>
-                                            <input type="text" min="0" class="form-control" id="Length"
-                                                name="conditionmaster[]" value="{{ $conditiondata['2'] }}"
-                                                placeholder="" readonly />
+                                            <input type="text" min="0" class="form-control" id="Length" name="conditionmaster[]" value="{{ $conditiondata['2'] }}" placeholder=""  />
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label for="Mic">Mic</label>
-                                            <input type="text" min="0" class="form-control" id="Mic"
-                                                name="conditionmaster[]" value="{{ $conditiondata['3'] }}"
-                                                placeholder="" readonly />
+                                            <input type="text" min="0" class="form-control" id="Mic" name="conditionmaster[]" value="{{ $conditiondata['3'] }}" placeholder=""  />
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label for="RD">RD</label>
-                                            <input type="text" min="0" class="form-control" id="RD"
-                                                name="conditionmaster[]" value="{{ $conditiondata['4'] }}"
-                                                placeholder="" readonly />
+                                            <input type="text" min="0" class="form-control" id="RD" name="conditionmaster[]" value="{{ $conditiondata['4'] }}" placeholder=""  />
                                         </div>
                                     </div>
-                                    {{--  <div class="row">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="1" name="complete" id="complete">
-                                            <label class="form-check-label" for="complete">
-                                                Order Complete
-                                            </label>
+                                     <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="remark">Remark:- </label>
+                                            <input type="text" class="form-control" name="remark" value="{{ $orderlist->remark }}" />
                                         </div>
-                                    </div>  --}}
-                                    {{--  <div class="card-footer">
+                                    </div>
+                                    <div class="card-footer">
                                         <button type="submit" class="btn btn-primary">Save</button>
-                                    </div>  --}}
+                                    </div>
                                 </div>
                                 <!-- /.card-body -->
                             </form>
