@@ -31,13 +31,20 @@ class UserController extends Controller
     public function index(){
         if (Auth::check()) {
             $user_data = auth()->user();
-
-            $user_list = User::with(['userDetail', 'branch'])
-                ->where('type', '2')
+            if($user_data->type == '2') {
+                $user_list = User::where('type', '2')
+                ->where('branch_id', $user_data->branch_id)
                 ->select('users.id', 'users.status', 'users.name', 'users.email', 'users.phone_number', 'branch.name As branchname')
                 ->join('user_detail', 'users.id', '=', 'user_detail.user_id')
                 ->join('branch', 'users.branch_id', '=', 'branch.id')
                 ->paginate(10);
+            }else{
+                $user_list = User::where('type', '2')
+                ->select('users.id', 'users.status', 'users.name', 'users.email', 'users.phone_number', 'branch.name As branchname')
+                ->join('user_detail', 'users.id', '=', 'user_detail.user_id')
+                ->join('branch', 'users.branch_id', '=', 'branch.id')
+                ->paginate(10);
+            }
 
             return view('admin.user.user_list', compact('user_data', 'user_list'))->with('i', (request()->input('page', 1) - 1) * 1);
         }
@@ -51,8 +58,11 @@ class UserController extends Controller
     public function create(){
         if(Auth::check()){
             $user_data = auth()->user();
-
-            $branch_list = Branch::get();
+            if($user_data->type == '2') {
+                $branch_list = Branch::where('id', $user_data->branch_id)->get();
+            }else{
+                $branch_list = Branch::get();
+            }
 
             return view('admin.user.user_add',compact('user_data','branch_list'));
         }
@@ -115,7 +125,11 @@ class UserController extends Controller
     public function edit($id){
         if(Auth::check()){
             $user_data = auth()->user();
-            $branch_list = Branch::get();
+            if($user_data->type == '2') {
+                $branch_list = Branch::where('id', $user_data->branch_id)->get();
+            }else{
+                $branch_list = Branch::get();
+            }
             $user = User::where('id', $id)->join('user_detail', 'users.id', '=', 'user_detail.user_id')->first();
 
 

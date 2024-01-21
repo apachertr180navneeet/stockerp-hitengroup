@@ -48,7 +48,8 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                 <div class="form-group" >
+                                @if($user_data->type == '2')
+                                <div class="form-group" >
                                     <label>Branch</label>
                                     <select class="form-control select2bs4 select2-hidden-accessible" name="branch_id" style="width: 100%;" aria-hidden="true" required>
                                         <option value="">----Select----</option>
@@ -57,6 +58,17 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                @else
+                                <div class="form-group" >
+                                    <label>Branch</label>
+                                    <select class="form-control select2bs4 select2-hidden-accessible" name="branch_id" style="width: 100%;" aria-hidden="true" required>
+                                        <option value="">----Select----</option>
+                                        @foreach ($branch_list as $branch)
+                                        <option value="{{ $branch->id }}" {{$user->branch_id == $branch->id  ? 'selected' : ''}}>{{ $branch->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                @endif
                                 <div class="form-group">
                                     <label for="phone_number">Phone Number</label>
                                     <input type="text" class="form-control" id="phone_number" maxlength="10" minlength="10" name="phone_number" value="{{ $user->phone_number }}" placeholder="Enter Phone" required/>
