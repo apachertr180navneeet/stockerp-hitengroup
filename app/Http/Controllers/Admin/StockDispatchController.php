@@ -34,11 +34,14 @@ class StockDispatchController extends Controller
     public function index(){
         if(Auth::check()){
             $user_data = auth()->user();
-            $stockDispatchList = StockDispatch::select('stock_dispatch.id','stock_dispatch.stock_date','stock_dispatch.status','stock_dispatch.total_amount','stock_dispatch.type','stock_dispatch.from_id','stock_dispatch.vendor_to_id','stock_dispatch.branch_to_id')->paginate(10);
-
+            if($user_data->type == '2') {
+                $stockDispatchList = StockDispatch::where('stock_dispatch.from_id', $user_data->branch_id)->select('stock_dispatch.id','stock_dispatch.stock_date','stock_dispatch.status','stock_dispatch.total_amount','stock_dispatch.type','stock_dispatch.from_id','stock_dispatch.vendor_to_id','stock_dispatch.branch_to_id')->paginate(10);
+            }else{
+                $stockDispatchList = StockDispatch::select('stock_dispatch.id','stock_dispatch.stock_date','stock_dispatch.status','stock_dispatch.total_amount','stock_dispatch.type','stock_dispatch.from_id','stock_dispatch.vendor_to_id','stock_dispatch.branch_to_id')->paginate(10);
+            }
             $startDate = "";
             $endDate = "";
-            
+
             return view('admin.stock_dispatch.stock_list',compact('user_data','stockDispatchList','startDate','endDate'))->with('i', (request()->input('page', 1) - 1) * 1);
         }
 
@@ -49,11 +52,16 @@ class StockDispatchController extends Controller
         if(Auth::check()){
             $user_data = auth()->user();
             $unit_list = Unit::get();
+            if($user_data->type == '2') {
+                $branchlistfrom = Branch::where('id', $user_data->branch_id)->get();
+            }else{
+                $branchlistfrom = Branch::get();
+            }
             $branch_list = Branch::get();
             $user_list = User::where('type', '3')->get();
             $item_list = Item::get();
-            
-            return view('admin.stock_dispatch.stock_add',compact('user_data','unit_list','user_list','item_list','branch_list'));
+
+            return view('admin.stock_dispatch.stock_add',compact('user_data','unit_list','user_list','item_list','branch_list','branchlistfrom'));
         }
 
         return redirect("admin/login")->withSuccess('You are not allowed to access');
@@ -102,7 +110,7 @@ class StockDispatchController extends Controller
         return redirect()->route('admin.stock.dispatch.list')->with('success','stock created successfully.');
 
     }
-       
+
     public function edit($id){
         if(Auth::check()){
             $user_data = auth()->user();
@@ -111,12 +119,17 @@ class StockDispatchController extends Controller
             $unit_list = Unit::get();
             $item_list = Item::get();
             $user_list = User::where('type', '3')->get();
-            $branch_list = Branch::get();            
-            return view('admin.stock_dispatch.stock_edit',compact('user_data','stock','unit_list','user_list','item_list','stockItem','branch_list'));
+            $branch_list = Branch::get();
+            if($user_data->type == '2') {
+                $branchlistfrom = Branch::where('id', $user_data->branch_id)->get();
+            }else{
+                $branchlistfrom = Branch::get();
+            }
+            return view('admin.stock_dispatch.stock_edit',compact('user_data','stock','unit_list','user_list','item_list','stockItem','branch_list','branchlistfrom'));
         }
         return redirect("admin/login")->withSuccess('You are not allowed to access');
     }
-        
+
     public function update(Request $request){
         $validatedData = $request->validate([
             'stock_date' => 'required',
@@ -158,7 +171,7 @@ class StockDispatchController extends Controller
         $deleted = StockDispatch::where('id', $id)->delete();
         return response()->json(['success'=>'stock Deleted Successfully!']);
     }
-    
+
     public function status(Request $request){
         $id = $request->id;
         $datauser = [

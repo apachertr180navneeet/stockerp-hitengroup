@@ -80,6 +80,7 @@
                                             <th>S.no.</th>
                                             <th>Date</th>
                                             <th>Vendor</th>
+                                            <th>Branch</th>
                                             <th>Amount</th>
                                             <th>Quantity</th>
                                             <th>Action</th>
@@ -94,6 +95,7 @@
                                             <td> STOCKIN-{{ $stock->id }}</td>
                                             <td>{{ $stock->stock_date }}</td>
                                             <td>{{ $stock->name }}</td>
+                                            <td>{{ $stock->branch_name }}</td>
                                             <td>{{ $stock->total_amount }}</td>
                                             <td>{{ $stock->qty }}</td>
                                             <td>

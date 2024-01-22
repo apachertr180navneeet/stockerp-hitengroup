@@ -53,10 +53,10 @@
                                         <select class="form-control select2bs4 select2-hidden-accessible" name="from_id"
                                             id="from_id" style="width: 100%;" aria-hidden="true" required>
                                             <option value="">----Select----</option>
-                                            @foreach ($branch_list as $branch)
-                                                <option value="{{ $branch->id }}"
-                                                    {{ $branch->id == $stock->from_id ? 'selected' : '' }}>
-                                                    {{ $branch->name }}</option>
+                                            @foreach ($branchlistfrom as $branchfrom)
+                                                <option value="{{ $branchfrom->id }}"
+                                                    {{ $branchfrom->id == $stock->from_id ? 'selected' : '' }}>
+                                                    {{ $branchfrom->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>

@@ -15,6 +15,7 @@ class Stock extends Model
     protected $fillable = [
         'stock_date',
         'vendor_id',
+        'branch_id',
         'status',
         'total_amount',
         'qty'

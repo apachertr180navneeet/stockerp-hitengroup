@@ -62,6 +62,7 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        @if($user_data->type == '2')
                                         <div class="col">
                                             <div class="form-group">
                                                 <label>Branch</label>
@@ -74,6 +75,20 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        @else
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label>Branch</label>
+                                                <select class="form-control select2bs4 select2-hidden-accessible"
+                                                    name="branch_id" style="width: 100%;" aria-hidden="true" required>
+                                                    <option value="">----Select----</option>
+                                                    @foreach ($branch_list as $branch)
+                                                        <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        @endif
                                         <div class="col">
                                             <div class="form-group">
                                                 <label>Vendor</label>
