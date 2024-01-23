@@ -31,7 +31,7 @@
         <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css'); }}" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css">
         <!-- jQuery -->
-        <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+        {{--  <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
         <style>
             div#customer_list_filter{
                 float: right;
@@ -40,7 +40,7 @@
             .tableimg{
                 width: 7%;
             }
-        </style>
+        </style>  --}}
     </head>
     <body class="hold-transition sidebar-mini layout-fixed">
         <div class="wrapper">
@@ -199,7 +199,7 @@
             </aside>
             <!-- /.control-sidebar -->
         </div>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
         <!-- jQuery UI 1.11.4 -->
         <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
         <script>
@@ -207,7 +207,11 @@
         </script>
         <!-- Bootstrap 4 -->
         <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
         <script src="{{ asset('plugins/sparklines/sparkline.js') }}"></script>
+        <script src="{{ asset('plugins/jqvmap/jquery.vmap.min.js') }}"></script>
+        <script src="{{ asset('plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script>
+        <script src="{{ asset('plugins/jquery-knob/jquery.knob.min.js') }}"></script>
         <!-- Select2 -->
         <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
         <script src="{{ asset('plugins/jquery-knob/jquery.knob.min.js') }}"></script>
@@ -227,12 +231,14 @@
         <script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
         <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
         <!-- daterange picker -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+        <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
         <script src="{{ asset('plugins/daterangepicker/daterangepicker.js') }}"></script>
+        <script src="{{ asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
         <!-- AdminLTE App -->
         <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
         <!-- AdminLTE App -->
         <script src="{{ asset('dist/js/adminlte.js') }}"></script>
+        <script src="{{ asset('dist/js/pages/dashboard.js') }}"></script>
 
 
         <script>
