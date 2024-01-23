@@ -38,11 +38,17 @@ class StockMaterialManagemntController extends Controller
     public function index(){
         if(Auth::check()){
             $user_data = auth()->user();
-
-            $stock_material_list = StockMaterialManagemnt::select('stock_material_managemnt.id','stock_material_managemnt.stock_material_managemnt_date','stock_material_managemnt.source_location','stock_material_managemnt.destination_location','stock_material_managemnt.status','source_branch.name as sourcebranchname','destination_branch.name as destinbranchname')
-            ->join('branch as source_branch', 'stock_material_managemnt.source_location', '=', 'source_branch.id')
-            ->join('branch as destination_branch', 'stock_material_managemnt.destination_location', '=', 'destination_branch.id')
-            ->paginate(10);
+            if($user_data->type == '2') {
+                $stock_material_list = StockMaterialManagemnt::where('stock_material_managemnt.source_location', $user_data->branch_id)->select('stock_material_managemnt.id','stock_material_managemnt.stock_material_managemnt_date','stock_material_managemnt.source_location','stock_material_managemnt.destination_location','stock_material_managemnt.status','source_branch.name as sourcebranchname','destination_branch.name as destinbranchname')
+                ->join('branch as source_branch', 'stock_material_managemnt.source_location', '=', 'source_branch.id')
+                ->join('branch as destination_branch', 'stock_material_managemnt.destination_location', '=', 'destination_branch.id')
+                ->paginate(10);
+            }else{
+                $stock_material_list = StockMaterialManagemnt::select('stock_material_managemnt.id','stock_material_managemnt.stock_material_managemnt_date','stock_material_managemnt.source_location','stock_material_managemnt.destination_location','stock_material_managemnt.status','source_branch.name as sourcebranchname','destination_branch.name as destinbranchname')
+                ->join('branch as source_branch', 'stock_material_managemnt.source_location', '=', 'source_branch.id')
+                ->join('branch as destination_branch', 'stock_material_managemnt.destination_location', '=', 'destination_branch.id')
+                ->paginate(10);
+            }
 
             $startDate = "";
             $endDate = "";
@@ -58,7 +64,12 @@ class StockMaterialManagemntController extends Controller
             $item_list = Item::get();
             $overHeadList = Overhead::get();
             $branch_list = Branch::get();
-            return view('admin.stock_material.stock_material_add',compact('user_data','item_list','overHeadList','branch_list'));
+            if($user_data->type == '2') {
+                $sourcebranch_list = Branch::where('id', $user_data->branch_id)->get();
+            }else{
+                $sourcebranch_list = Branch::get();
+            }
+            return view('admin.stock_material.stock_material_add',compact('user_data','item_list','overHeadList','branch_list','sourcebranch_list'));
         }
 
         return redirect("admin/login")->withSuccess('You are not allowed to access');
@@ -186,7 +197,7 @@ class StockMaterialManagemntController extends Controller
     public function edit($id){
         if(Auth::check()){
             $user_data = auth()->user();
-            
+
             $user = StockMaterialManagemnt::select('stock_material_managemnt.id','stock_material_managemnt.stock_material_managemnt_date','stock_material_managemnt.source_location','stock_material_managemnt.destination_location','stock_material_managemnt.status','source_branch.name as sourcebranchname','destination_branch.name as destinbranchname')
             ->where('stock_material_managemnt.id', $id)
             ->join('branch as source_branch', 'stock_material_managemnt.source_location', '=', 'source_branch.id')
@@ -209,7 +220,7 @@ class StockMaterialManagemntController extends Controller
             ->where('stock_meterial_overhead.stock_material_id', $stockmaterialid)
             ->join('overhead', 'stock_meterial_overhead.overhead_item_id', '=', 'overhead.id')
             ->get();
-            
+
             return view('admin.stock_material.stock_material_edit',compact('user_data','user','stockconsumptionitem','stockproductionitem','stockoverhead'));
         }
 

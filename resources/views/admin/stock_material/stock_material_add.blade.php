@@ -49,8 +49,8 @@
                                     <select class="form-control select2bs4 select2-hidden-accessible"
                                         id="source_location" name="source_location" style="width: 100%;"
                                         aria-hidden="true" required>
-                                        @foreach ($branch_list as $branch)
-                                            <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                        @foreach ($sourcebranch_list as $srcbranch)
+                                            <option value="{{ $srcbranch->id }}">{{ $srcbranch->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -105,7 +105,7 @@
                                         <!-- Quotation rows will be added here -->
                                     </tbody>
                                 </table>
-                                
+
                                 <h6>OverHead</h6>
                                 <div class="form-group">
                                     <div class="row">
