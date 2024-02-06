@@ -51,7 +51,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="phone_number">Phone Number</label>
-                                        <input type="text" class="form-control" id="phone_number" name="phone_number"
+                                        <input type="tel" class="form-control" minlength="10" maxlength="15" pattern="[0-9]{10,15}" id="phone_number" name="phone_number"
                                             value="{{ old('phone_number') }}" placeholder="Enter Phone Number" required />
                                         @error('phone_number')
                                             <span class="text-danger">{{ $message }}</span>
@@ -59,13 +59,13 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Email</label>
-                                        <input type="text" class="form-control" id="email" name="email"
+                                        <input type="email" class="form-control" id="email" name="email"
                                             value="{{ old('email') }}" placeholder="Enter email" required />
                                         @error('email')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                    
+
                                     <div class="form-group">
                                         <label for="address">Address</label>
                                         <input type="text" class="form-control" id="address" name="address"

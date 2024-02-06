@@ -71,14 +71,14 @@
                                 @endif
                                 <div class="form-group">
                                     <label for="phone_number">Phone Number</label>
-                                    <input type="text" class="form-control" id="phone_number" maxlength="10" minlength="10" name="phone_number" value="{{ $user->phone_number }}" placeholder="Enter Phone" required/>
+                                    <input type="tel" class="form-control" minlength="10" maxlength="15" pattern="[0-9]{10,15}" name="phone_number" value="{{ $user->phone_number }}" placeholder="Enter Phone" required/>
                                     @error('phone_number')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="text" class="form-control" id="email" name="email" value="{{ $user->email }}" placeholder="Enter email" required/>
+                                    <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}" placeholder="Enter email" required/>
                                     @error('email')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -142,7 +142,7 @@
             </div>
         </div>
     </section>
-    
+
 </div>
 
 @endsection
