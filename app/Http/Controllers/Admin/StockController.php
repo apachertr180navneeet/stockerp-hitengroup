@@ -95,6 +95,7 @@ class StockController extends Controller
         $datastock = [
             'stock_date' => $request->stock_date,
             'vendor_id' => $request->vendor_id,
+            'branch_id' => $request->branch_id,
             'total_amount' => $request->finaltotal_amount,
             'qty' => $mainqty
         ];

@@ -51,7 +51,7 @@ class StockReportController extends Controller
             ->get();
             $startDate = $formattedDate;
             $endDate = $formattedDate;
-            
+
 
             return view('admin.stockreport.stock_report',compact('user_data','stock_report','startDate','endDate','branch_list','branch'));
         }
@@ -92,6 +92,7 @@ class StockReportController extends Controller
             $endDate = $formattedDate;
 
             $order_pending_report = StockChallan::select('stock_challan.id','stock_challan.challan_number','stock_challan.order_date','stock_challan.customer_id','stock_challan.branch_id','stock_challan.item_id','stock_challan.quantity','branch.name as branch_name','users.name as users_name','item.item_name as item_name')
+            ->where('orderstatus', '0')
             ->join('item', 'stock_challan.item_id', '=', 'item.id')
             ->join('branch', 'stock_challan.branch_id', '=', 'branch.id')
             ->join('users', 'stock_challan.customer_id', '=', 'users.id')
@@ -112,6 +113,7 @@ class StockReportController extends Controller
             $endDate = $request->to;
 
             $order_pending_report = StockChallan::select('stock_challan.id','stock_challan.challan_number','stock_challan.order_date','stock_challan.customer_id','stock_challan.branch_id','stock_challan.item_id','stock_challan.quantity','stock_challan.created_at as stock_challan_created_at','stock_challan.quantity as stock_challan_qty','branch.name as branch_name','users.name as users_name','item.item_name as item_name')
+            ->where('orderstatus', '0')
             ->where('stock_challan.branch_id', $branch)
             ->whereBetween(DB::raw('DATE(stock_challan.created_at)'), [$startDate, $endDate])
             ->join('item', 'stock_challan.item_id', '=', 'item.id')
@@ -180,11 +182,12 @@ class StockReportController extends Controller
             $endDate = $formattedDate;
 
             $order_pending_report = StockChallan::select('stock_challan.id','stock_challan.challan_number','stock_challan.conditionmaster','stock_challan.actualconditionmaster','stock_challan.order_date','stock_challan.customer_id','stock_challan.branch_id','stock_challan.item_id','stock_challan.quantity','branch.name as branch_name','users.name as users_name','item.item_name as item_name')
+            ->where('orderstatus', '0')
             ->join('item', 'stock_challan.item_id', '=', 'item.id')
             ->join('branch', 'stock_challan.branch_id', '=', 'branch.id')
             ->join('users', 'stock_challan.customer_id', '=', 'users.id')
             ->get();
-            
+
             return view('admin.stockreport.pending_report',compact('user_data','order_pending_report','startDate','endDate','branch_list','branch'));
         }
 
@@ -201,6 +204,7 @@ class StockReportController extends Controller
             $endDate = $request->to;
 
             $order_pending_report = StockChallan::select('stock_challan.id','stock_challan.challan_number','stock_challan.conditionmaster','stock_challan.actualconditionmaster','stock_challan.order_date','stock_challan.customer_id','stock_challan.branch_id','stock_challan.item_id','stock_challan.quantity','branch.name as branch_name','users.name as users_name','item.item_name as item_name')
+            ->where('orderstatus', '0')
             ->where('stock_challan.branch_id', $branch)
             ->whereBetween(DB::raw('DATE(stock_challan.order_date)'), [$startDate, $endDate])
             ->join('item', 'stock_challan.item_id', '=', 'item.id')
